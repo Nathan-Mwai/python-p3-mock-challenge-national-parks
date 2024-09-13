@@ -1,3 +1,4 @@
+import re
 class NationalPark:
 
     def __init__(self, name):
@@ -11,7 +12,7 @@ class NationalPark:
     def name(self, value):
         if not isinstance(value, str):
             raise Exception('Name must be in string format')
-        if not 3<= len(value):
+        if len(value) < 3:
             raise Exception('Length of name must be 3 and above')
         if hasattr(self, '_name') and self._name is not None:
             raise Exception('Name cannot be changed once made')
@@ -37,7 +38,41 @@ class Trip:
         self.national_park = national_park
         self.start_date = start_date
         self.end_date = end_date
-
+    
+    @property
+    def start_date(self):
+        return self._start_date
+    
+    @start_date.setter
+    def start_date(self,value):
+        if not isinstance(value, str):
+            raise Exception('Start date must be in string format')
+        if len(value) < 7:
+            raise Exception('values must be greater than 7 characters')
+        
+        #  Using regex to input method
+        pattern = r'^[A-z]+ \d{1,2}(st|nd|rd|th)?$'
+        if not re.match(pattern, value):
+            raise Exception('Start date must be in format of "Month Day(suffix)"')
+        self._start_date = value
+        
+    @property
+    def end_date(self):
+        return self._end_date
+    
+    @end_date.setter
+    def end_date(self,value):
+        if not isinstance(value, str):
+            raise Exception('Start date must be in string format')
+        if len(value) < 7:
+            raise Exception('values must be greater than 7 characters')
+        
+        #  Using regex to input method
+        pattern = r'^[A-z]+ \d{1,2}(st|nd|rd|th)?$'
+        if not re.match(pattern, value):
+            raise Exception('Start date must be in format of "Month Day(suffix)"')
+        self._end_date = value 
+        
 
 class Visitor:
 
